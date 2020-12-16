@@ -1,10 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.mapper.GoodsMapper">
-    <!-- 获取所有商品信息列表 -->
-    <!-- List<GoodsEntity> findList();  -->
-    <select id="findList" resultType="com.example.demo.entity.GoodsEntity">
-        select pid, pname, pprices
+    <insert id="addGoods" parameterType="com.example.demo.entity.GoodsEntity" useGeneratedKeys="true"
+            keyProperty ="id">
+        insert into goods (pid, pname, pprices)
+        values (#{pid}, #{pname}, #{pprices})
+    </insert>
+
+
+    <update id="updateGoods" parameterType="com.example.demo.entity.GoodsEntity" useGeneratedKeys="true"
+            keyProperty ="id">
+        update
+
+    </update>
+    <select id="findGoods" resultType="com.example.demo.entity.GoodsEntity">
+        select id, pid, pname, pprices
         from goods
+        <where>
+            <if test="pid != null">
+                AND pid in
+                <foreach collection="pid" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="pname != null">
+                AND pname in
+                <foreach collection="pname" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="pprices != null">
+                AND pprices in
+                <foreach collection="pprices" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        <if test="limit != null">
+            limit
+            <foreach collection="limit" item="item">
+                ${item}
+            </foreach>
+        </if>
+        <if test="offset != null">
+            offset
+            <foreach collection="offset" item="item">
+                ${item}
+            </foreach>
+        </if>
     </select>
+
 </mapper>

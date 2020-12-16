@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GoodsServiceImpl implements IGoodsService {
@@ -15,7 +16,20 @@ public class GoodsServiceImpl implements IGoodsService {
     private GoodsMapper goodsMapper;
 
     @Override
-    public List<GoodsEntity> getHotList() {
-        return goodsMapper.findList();
+    public List<GoodsEntity> findGoods(Map<String, String[]> map) {
+        return goodsMapper.findGoods(map);
+    }
+
+    @Override
+    public Long updateGoods(GoodsEntity goods) {
+        goodsMapper.updateGoods(goods);
+        return null;
+    }
+
+    @Override
+    public Long addGoods(GoodsEntity goods) {
+        goodsMapper.addGoods(goods);
+        Long Id = goods.getId();
+        return Id;
     }
 }

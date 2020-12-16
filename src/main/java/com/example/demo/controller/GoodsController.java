@@ -4,11 +4,15 @@ import com.example.demo.entity.GoodsEntity;
 import com.example.demo.service.IGoodsService;
 import com.example.demo.util.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.HttpRequestHandler;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -17,11 +21,37 @@ public class GoodsController extends BaseController {
     @Autowired
     private IGoodsService goodsService;
 
-    @GetMapping("hot")
-    public ResponseResult<List<GoodsEntity>> getHotList() {
-        // 执行查询
-        List<GoodsEntity> data = goodsService.getHotList();
-        // 返回
+    @PostMapping
+    public ResponseResult<Long> addGoods(HttpServletRequest request) {
+        Map<String, String[]> map = request.getParameterMap();
+        GoodsEntity goods = new GoodsEntity() ;
+        // 下面有可能为null
+        goods.setPid(Integer.parseInt(map.get("pid")[0]));
+        goods.setPprices(Float.parseFloat(map.get("pprices")[0]));
+        goods.setPname(map.get("pname")[0]);
+        Long data = goodsService.addGoods(goods);
         return new ResponseResult<>(SUCCESS, data);
     }
+
+    @PutMapping
+    public ResponseResult<Long> updateGoods(HttpServletRequest request) {
+        Map<String, String[]> map = request.getParameterMap();
+        GoodsEntity goods = new GoodsEntity() ;
+        // 下面有可能为null
+        goods.setId(Long.getLong(map.get("id")[0]));
+        goods.setPid(Integer.parseInt(map.get("pid")[0]));
+        goods.setPprices(Float.parseFloat(map.get("pprices")[0]));
+        goods.setPname(map.get("pname")[0]);
+        Long data = goodsService.updateGoods(goods);
+        return new ResponseResult<>(SUCCESS, data);
+    }
+
+    @GetMapping
+    public ResponseResult<List<GoodsEntity>> listGoods(HttpServletRequest request) {
+        Map<String, String[]> map = request.getParameterMap();
+        List<GoodsEntity> data = goodsService.findGoods(map);
+        return new ResponseResult<>(SUCCESS, data);
+    }
+
+
 }
