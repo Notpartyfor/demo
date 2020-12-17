@@ -11,4 +11,5 @@ public interface GoodsMapper {
     Long addGoods(GoodsEntity goods) ;
     Long updateGoods(GoodsEntity goods);
     List<GoodsEntity> findGoods(Map<String, String[]> map);
+    Long deleteGoods(Long id);
 }

@@ -11,5 +11,7 @@ public interface IGoodsService {
     Long updateGoods(GoodsEntity goods);
 
     List<GoodsEntity> findGoods(Map<String, String[]> map);
+
+    Long deleteGoods(Long Id);
 }
 

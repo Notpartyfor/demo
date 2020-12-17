@@ -31,6 +31,19 @@ public class GoodsMapperTests {
     }
 
     @Test
+    public void updateGoods() {
+        System.err.println(mapper);
+        GoodsEntity goods = new GoodsEntity();
+        goods.setId(13);
+        goods.setPid(13);
+        goods.setPprices(13.00f);
+        goods.setPname("测试笔13");
+        Long affect = mapper.updateGoods(goods);
+        System.err.println("id:" + goods.getId());
+        System.err.println("affect rows:" + affect);
+    }
+
+    @Test
     public void findGoods() {
         System.err.println(mapper);
         Map<String, String[]> map = new HashMap<>();
@@ -43,5 +56,13 @@ public class GoodsMapperTests {
         for (GoodsEntity item : list) {
             System.out.println(item);
         }
+    }
+
+    @Test
+    public void deleteGoods() {
+        System.err.println(mapper);
+        Long Id = 19L;
+        Long affect = mapper.deleteGoods(Id);
+        System.err.println("affect rows:" + affect);
     }
 }

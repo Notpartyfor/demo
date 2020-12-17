@@ -4,13 +4,8 @@ import com.example.demo.entity.GoodsEntity;
 import com.example.demo.service.IGoodsService;
 import com.example.demo.util.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +33,7 @@ public class GoodsController extends BaseController {
         Map<String, String[]> map = request.getParameterMap();
         GoodsEntity goods = new GoodsEntity() ;
         // 下面有可能为null
-        goods.setId(Long.getLong(map.get("id")[0]));
+        goods.setId(Long.parseLong(map.get("id")[0]));
         goods.setPid(Integer.parseInt(map.get("pid")[0]));
         goods.setPprices(Float.parseFloat(map.get("pprices")[0]));
         goods.setPname(map.get("pname")[0]);
@@ -53,5 +48,11 @@ public class GoodsController extends BaseController {
         return new ResponseResult<>(SUCCESS, data);
     }
 
+    @DeleteMapping
+    public ResponseResult<Long> deleteGoods(HttpServletRequest request) {
+        Long Id = Long.parseLong(request.getParameter("id"));
+        Long data = goodsService.deleteGoods(Id);
+        return new ResponseResult<>(SUCCESS,data);
+    }
 
 }

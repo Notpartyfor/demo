@@ -20,16 +20,23 @@ public class GoodsServiceImpl implements IGoodsService {
         return goodsMapper.findGoods(map);
     }
 
+
+
     @Override
     public Long updateGoods(GoodsEntity goods) {
         goodsMapper.updateGoods(goods);
-        return null;
+        return goods.getId();
     }
 
     @Override
     public Long addGoods(GoodsEntity goods) {
         goodsMapper.addGoods(goods);
-        Long Id = goods.getId();
+        return goods.getId();
+    }
+
+    @Override
+    public Long deleteGoods(Long Id) {
+        goodsMapper.deleteGoods(Id);
         return Id;
     }
 }
